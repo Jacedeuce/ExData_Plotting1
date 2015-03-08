@@ -1,6 +1,6 @@
 ##Ensure that your working directory is set to an empty folder in your desired
 ##location before running plot1()
-plot2 <- function(){
+plot4 <- function(){
   
   #load required sqldf library.  sqldf is used to subset the desired 
   ##days from large data file when loading the data
@@ -41,12 +41,34 @@ plot2 <- function(){
   data1$POSdate <- strptime(data1$datetime, format = "%d/%m/%Y %H:%M:%S")
   
   ##sets graphic device to plot2.png output in repo folder - 480x480 pixels with transparent background
-  png('./repo/plot2.png',width=480,height=480,units="px",bg = "transparent")
+  png('./repo/plot4.png',width=480,height=480,units="px",bg = "transparent")
   
-  ##creates plot format without plotting points
-  plot(data1$POSdate,data1$Global_active_power, type = "n",  ylab = "Global Active Power (kilowatts)", xlab = "")
-  ##plots line of the Global Active Power vs Date
-  lines(data1$POSdate,data1$Global_active_power)
+  ##creates 2 row and 2 column graphic device
+  par(mfrow = c(2, 2))
+  
+    ##top left plot##
+    plot(data1$POSdate,data1$Global_active_power, type = "n",  ylab = "Global Active Power", xlab = "")
+      ##plots line of the Global Active Power vs Date
+      lines(data1$POSdate,data1$Global_active_power)
+  
+    ##top right plot##
+    plot(data1$POSdate,data1$Voltage, type = "n",  ylab = "Voltage", xlab = "datetime")
+      ##plots line of Voltage vs Date
+      lines(data1$POSdate,data1$Voltage)
+  
+    ##bottom left plot##
+    plot(data1$POSdate, data1$Sub_metering_1, type = "n",  ylab = "Energy sub metering", xlab = "")
+      ##plots lines of each sub-meter vs Date
+      lines(data1$POSdate, data1$Sub_metering_1, col = "black")
+      lines(data1$POSdate, data1$Sub_metering_2, col = "red")
+      lines(data1$POSdate, data1$Sub_metering_3, col = "blue")
+      ##adds legend on top right with lines and color coded
+      legend(x="topright", lty = 1, legend = c(names(data1[,7:9])), col = c("black", "red", "blue"), bty="n")
+  
+    ##bottom right plot##
+    plot(data1$POSdate,data1$Global_reactive_power, type = "n",  ylab = "Global_reactive_power", xlab = "datetime")
+      ##plots line of Voltage vs Date
+      lines(data1$POSdate,data1$Global_reactive_power)
   
   ##close connection to png
   dev.off()

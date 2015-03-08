@@ -6,15 +6,18 @@ plot3 <- function(){
   ##days from large data file when loading the data
   library(sqldf)
   
-  ##Data source
-  dataURL <- "https://d396qusza40orc.cloudfront.net/exdata%2Fdata%2Fhousehold_power_consumption.zip"
-  ##name downloaded file
-  zipName <- "PowerConsumption.zip"
-  ##download the file from the source
-  download.file(dataURL, zipName, mode = "wb")
-  
-  ##Unzip the file into the set working directory
-  unzip(zipName)
+  ##checks for data file and unzips it
+  if(!file.exists("household_power_consumption.txt")){
+    ##Data source
+    dataURL <- "https://d396qusza40orc.cloudfront.net/exdata%2Fdata%2Fhousehold_power_consumption.zip"
+    ##name downloaded file
+    zipName <- "PowerConsumption.zip"
+    ##download the file from the source
+    download.file(dataURL, zipName, mode = "wb")
+    
+    ##Unzip the file into the set working directory
+    unzip(zipName)
+  }
   
   ##Assuming data is in a text file retrieves the name of the data file.
   ##if the data is stored in a different file type this code must be modified
